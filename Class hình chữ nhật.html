@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xây dựng lớp mô tả hình chữ nhật</title>
+    <script src="script.js"></script>
+    <style>
+        ul > li {
+            display: inline;
+            width: 100px;
+            margin: 0 20px;
+        }
+        li:nth-child(1),li:nth-child(3) {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+<label>Chiều dài:</label>
+<input id="chieudai" type="number" width="100" />
+<label>Chiều rộng:</label>
+<input id="chieurong" type="number" width="100" />
+<button type="button" onclick="setCN()">Vẽ hình nào...</button>
+<input type="hidden" onclick="setCN()" />
+<ul>
+    <li>Chu vi: </li>
+    <li id="chuvi">&nbsp;</li>
+    <li>Diện tích: </li>
+    <li id="dientich">&nbsp;</li>
+</ul>
+<br />
+<canvas id="myCanvas" width="0" height="0" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML5 canvas tag.
+</canvas>
+<script>
+    let hinhChunhat = function (dai, rong) {
+
+        this.dai = dai;
+        this.rong = rong;
+
+        this.dientich = function () {
+            let S = dai * rong;
+            return S;
+        };
+
+        this.chuvi = function () {
+            let cv = dai * 2 + rong * 2;
+            return cv;
+        };
+
+        this.ve = function () {
+            let c = document.getElementById("myCanvas");
+            let ctx = c.getContext("2d");
+            ctx.rect(20, 20, dai, rong);
+            ctx.stroke();
+        };
+    };
+
+    function setCN() {
+        let d = parseInt(document.getElementById("chieudai").value);
+        let r = parseInt(document.getElementById("chieurong").value);
+        document.getElementById("myCanvas").width = d + 40;
+        document.getElementById("myCanvas").height = r + 40;
+        let hinhCN = new hinhChunhat(d,r);
+        hinhCN.ve();
+        document.getElementById("dientich").innerHTML = hinhCN.dientich();
+        document.getElementById("chuvi").innerHTML = hinhCN.chuvi();
+    }
+</script>
+</body>
